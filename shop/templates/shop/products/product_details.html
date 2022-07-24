@@ -1,0 +1,159 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %} Products {% endblock title %} 
+
+{% block content11 %}
+<section class="bg-light py-4 my-5" style="min-height:600px">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{ data }}</h4>
+                <hr style="border-color: #b8fc2;">
+                
+            </div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'collection' %}">Collections</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'collection' data.category.name %}">{{ data.category.name }}</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ data }}</li>
+                </ol>
+              </nav>
+              {% include 'shop/inc/message.html' %}
+            <div class="col-4 my-3">
+                    {% if data.trending %}
+                        <div class="container bg-danger">
+                            <h4><span class="badge badge-danger">Trending...</span></h4>
+                       </div>
+                    {% endif %}
+                <img src="{{ data.product_image.url }}" class="img-thumbnail" alt="product_image">
+            </div>
+            <div class="col-8 my-3">
+                
+                <h5 class="text-success">{{ data | upper}}</h5>
+                <p> Seller : {{ data.vendor }}</p>
+                <p> Description : {{ data.description }}</p>
+                <h6 class="my-2 text-danger"> Current Price : <s> Rs.{{ data.original_price | stringformat:'d'}}</s></h6>
+                <h6 class="my-3 text-primary"> Offer Price : Rs.{{ data.selling_price}}</h6>
+                <div class="my-3">
+                    {% if data.quantity > 0 %}
+                        <input type="hidden" value="{{ data.id }}" id="pid">
+                    
+                            <p>
+                                <div class="input-group" style="width:150px">
+                                    
+                                    <button class="input-group-text bg-success text-light" id="btnMinus"><i class="fa fa-minus"> </i></button>
+                                        <input type="text" name="qty" id="txtQty" class="form-control text-center" type="button" value="1">
+                                    <button class="input-group-text bg-success text-light" id="btnPlus"><i class="fa fa-plus"> </i></button>
+                                </div>
+                            </p>
+                        <button type="button" class="btn btn-primary" id="btnCart"><i class="fa fa-shopping-cart"> </i> Add to Cart</button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary disabled"><i class="fa fa-minus"> </i>  Out of stack</button>
+                    {% endif %}
+                    <button type="button" class="btn btn-danger" id="btnFav"><i class="fa fa-heart"> </i></button>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+</section>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event){
+        const btnPlus = document.getElementById("btnPlus");
+        const btnMinus = document.getElementById("btnMinus");
+        const txtQty = document.getElementById("txtQty");
+        const pid = document.getElementById("pid");
+        //const tkn = document.querySelector('[name="csrfmiddlewaretoken"]').value;
+        const btnCart = document.getElementById("btnCart");
+        const btnFav = document.getElementById("btnFav");
+
+
+        btnPlus.addEventListener("click", function(){
+            let qty=parseInt(txtQty.value,10);
+            qty=isNaN(qty)?0:qty;
+            //console.log(qty);
+            if(qty<10){
+                qty++;
+                txtQty.value=qty;
+            }
+        });
+
+        btnMinus.addEventListener("click", function(){
+            let qty=parseInt(txtQty.value,10);
+            qty=isNaN(qty)?0:qty;
+            //console.log(qty);
+            if(qty>1){
+                qty--;
+                txtQty.value=qty;
+            }
+        });
+
+        btnCart.addEventListener("click", function(){
+            let qty=parseInt(txtQty.value,10);
+            qty=isNaN(qty)?0:qty;
+            //console.log(qty);
+            if(qty>0){
+                let postObj = {
+                    product_qty: qty,
+                    pid: pid.value,
+                    //token: tkn
+
+                }
+                //console.log(postObj);
+                fetch("/addtocart",{
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers:{
+                        'Accept':'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify(postObj)
+                }).then(response =>{
+                    return response.json();
+                }).then(data => {
+                    //console.log(data)
+                    alert(data['status']);
+                });
+            }
+            else{
+                alert("please Enter the quantity")
+            }
+        });
+
+
+
+
+        btnFav.addEventListener("click", function(){
+
+                let postObj = {
+                    
+                    'pid': pid.value,
+
+                }
+                //console.log(postObj);
+                fetch("/fav_items",{
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers:{
+                        'Accept':'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify(postObj)
+                }).then(response =>{
+                    return response.json();
+                }).then(data => {
+                    //console.log(data)
+                    alert(data['status']);
+                });
+            
+
+        });
+    });
+
+</script>
+
+{% endblock content11 %}

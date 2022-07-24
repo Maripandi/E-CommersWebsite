@@ -1,0 +1,88 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %} Collections{% endblock title %}
+{% block content11 %}
+
+<section class="py-5 text-center container" style="margin-top:70px;">
+
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Best Sellers </h1>
+            <p class="lead text-muted"> Our most popular Products based on sales. Updated hourly ...</P>
+                <p>
+                    <a href="{% url 'login' %}" class="btn btn-primary my-2"> Already User<a/>
+                    <a href="{% url 'register' %}" class="btn btn-primary my-2"> Register<a/>
+                </p>
+            {% include 'shop/inc/message.html' %}
+        </div>
+    </div>
+</section>
+<section class="bg-light py-4 my-5" style="min-height:600px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Catogories</h4>
+                <div class="card border-primary">
+                  <img class="card-img-top" src="holder.js/100px180/" alt="Title">
+                  <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                  </div>
+                </div>
+                
+            </div>
+
+            {% for i in data %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card text-start my-3">
+                    <img class="card-img-top" src="{{ i.image.url }}" height="250px" alt="Catogories images">
+                        <a href="{% url 'collection' i.name %}">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ i.name }}</h4>
+                                <p class="card-text">{{ i.description }}</p>
+                            
+                            </div>
+                        </a>
+                </div>
+                
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+</section>
+
+<div class="container">
+
+    
+    <div class="row">
+        
+            <h1> this is collections.html </h1>
+
+            <div class="col-lg-3">
+                <p> this is col-3 ----1</p>
+    
+                <br><p> Dummy col 3 </p>
+            </div>
+            <div class="col-lg-3">
+                <p> this is col-3 ----2</p>
+                <br><p> Dummy col 6 </p>
+            </div>
+            <div class="col-lg-3">
+                <p> this is col-3 ----3</p>
+    
+                <br><p> Dummy col 9 </p>
+            </div>
+            <div class="col-lg-3">
+                <p> this is col-3 ----3</p>
+    
+                <br><p> Dummy col 12 </p>
+            </div>
+        
+    </div>
+    
+</div>
+
+
+{% endblock content11 %}

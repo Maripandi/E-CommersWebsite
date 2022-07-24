@@ -1,0 +1,36 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %} Online shoping{% endblock title %}
+{% block content11 %}
+
+<div class="container my-5">
+    {% include 'shop/inc/message.html' %} 
+    {% include 'shop/inc/slider.html' %} 
+  
+    <div class="row">
+        <div class="col-12">
+            <h1> Trending Products </h1><br>
+            <h2> Offers closes soon...<h2>
+        </div>
+        {% for i in data %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card my-3">
+                <img class="img-thumbnail"  src="{{ i.product_image.url }}" alt="Title">
+            <a href="{% url 'pdetails' i.category.name i.name %}">
+                <div class="card-body">
+                    <h4 class="card-title">{{ i.name }}</h4>
+                    <p class="card-text">
+                        <span class="float-start"><s> Rs.{{ i.original_price | stringformat:'d'}}</s></span>
+                        <span class="float-end"> Rs.{{ i.selling_price}}</span>
+                    
+                    </p>
+                </div>
+            </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+
+{% endblock content11 %}

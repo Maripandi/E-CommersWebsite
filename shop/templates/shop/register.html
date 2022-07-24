@@ -1,0 +1,105 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %} Registration{% endblock title %}
+{% block content11 %}
+
+
+
+<section class ="py-4 my-5">
+    <div class="container">
+        <h1> User Registration form</h1>
+        <div class="row">
+            {% include 'shop/inc/message.html' %}
+            <div class="col-3">
+                
+            </div>
+            <div class="col-6">
+             <form method="post" action="" autocomplete="off">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <lable for="" class="form-lable">User Name:</lable>
+                    {{ data.username }}
+                   
+                </div>
+                <div class="mb-4">
+                    <lable for="" class="form-lable">Email:</lable>
+                    {{ data.email}}
+                   
+                </div>
+                <div class="mb-4">
+                    <lable for="" class="form-lable">Password:</lable>
+                    {{ data.password1 }}
+                  
+                </div>
+                <div class="mb-4">
+                    <lable for="" class="form-lable">Confirm Password:</lable>
+                    {{ data.password2 }}
+                    
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <p class="my-2">Already a user ? <a href="{% url 'login' %}">Login now</a></p>
+            </div>
+
+
+            <div class="col-3">
+                    <div class="mb-4">
+                        {% if data.errors.username %}
+                            <lable for="" class="text-danger d-block">{{ data.errors.username }}</lable>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+              
+                        {% if data.errors.email %}
+                            <lable for="" class="text-danger d-block">{{ data.errors.email }}</lable>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        
+                        {% if data.errors.password1 %}
+                            <lable for="" class="text-danger d-block">{{ data.errors.password1 }}</lable>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                       
+                        {% if data.errors.password2 %}
+                            <lable for="" class="text-danger d-block">{{ data.errors.password2 }}</lable>
+                        {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container my-5">
+
+    <div class="row">
+       
+        <div class="col-12">
+           
+        </div>
+        
+
+    <div class="row">
+        <h1> this is register.html</h1>
+        <div class="col-lg-4">
+            <p> this is col-4 ----1</p>
+
+            <br><p> 4 </p>
+        </div>
+        <div class="col-lg-4">
+            <p> this is col-4 ----2</p>
+            <br><p> 4 + 4 = 8 </p>
+        </div>
+        <div class="col-lg-4">
+            <p> this is col-4 ----3</p>
+
+            <br><p> 4 + 4 + 4 = 12 </p>
+        </div>
+        
+    </div>
+    
+</div>
+
+
+
+
+{% endblock content11 %}

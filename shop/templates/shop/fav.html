@@ -1,0 +1,113 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %} add to cart {% endblock title %}
+{% block content11 %}
+
+
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Cart Items</h4>
+                <div class="card border-primary">
+                  <img class="card-img-top" src="holder.js/100px180/" alt="Title">
+                  <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                  </div>
+                </div>
+                
+            </div>
+            
+                <<table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <th>Image</th>
+                            <th>Product name</th>
+                            <th>Amount</th>
+                            <th>UnFavourite</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <td scope="row"><img src="{{ i.product.product_image.url }}" height="75px" alt="{{ i.product.name }}"></td>
+                            <td>{{ i.product.name }}</td>
+                            
+                            <td>{{ i.product.selling_price | stringformat:'d' }}</td>
+                            
+                            
+                            <td><a href="{% url 'unfav' i.id %}" onclick="return confirm('Are you sure to remove from Favrite' )" class="btn btn-danger"><i class="fa fa-heart"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                       
+                        
+                    </tbody>
+                </table>
+                
+            
+            
+            {% for i in data %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card text-start my-3">
+                    <img class="card-img-top" src="" alt="Catogories images">
+                        <a href="">
+                            <div class="card-body">
+                                <h4 class="card-title"> {{ i }}</h4>
+                                <p class="card-text"></p>
+                            
+                            </div>
+                        </a>
+                </div>
+                
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+</section>
+
+<div class="container">
+
+    
+    <div class="row">
+        
+            <h1> this is collections.html </h1>
+
+            <div class="col-lg-3">
+                <p> this is col-3 ----1</p>
+    
+                <br><p> Dummy col 3 </p>
+            </div>
+            <div class="col-lg-3">
+                <p> this is col-3 ----2</p>
+                <br><p> Dummy col 6 </p>
+            </div>
+            <div class="col-lg-3">
+                <p> this is col-3 ----3</p>
+    
+                <br><p> Dummy col 9 </p>
+            </div>
+            <div class="col-lg-3">
+                <p> this is col-3 ----3</p>
+    
+                <br><p> Dummy col 12 </p>
+            </div>
+        
+    </div>
+    
+</div>
+
+<script>
+    const nodes = document.querySelectorAll('.amt');
+    const arr = Array.from(nodes);
+    const res = arr.reduce((acc,curr) => {
+        return acc += Number(curr.textContent)
+    }, 0);
+    document.getElementById("net").innerHTML="Rs : "+res;
+</script>
+
+{% endblock content11 %}

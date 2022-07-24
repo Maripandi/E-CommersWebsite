@@ -1,0 +1,44 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %} Products {% endblock title %} 
+
+{% block content11 %}
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{ data2 }}</h4>
+                <hr style="border-color: #b8fc2;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                      <li class="breadcrumb-item"><a href="{{ data2 }}">Collections</a></li>
+                      
+                    </ol>
+                  </nav>
+                  {% include 'shop/inc/message.html' %}
+            </div>
+
+            {% for i in data1 %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card my-3">
+                    <img class="img-thumbnail"  src="{{ i.product_image.url }}" alt="Title">
+                <a href="{% url 'pdetails' data2 i.name %}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ i.name }}</h4>
+                        <p class="card-text">
+                            <span class="float-start"><s> Rs.{{ i.original_price | stringformat:'d'}}</s></span>
+                            <span class="float-end"> Rs.{{ i.selling_price}}</span>
+                        
+                        </p>
+                    </div>
+                </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+
+
+{% endblock content11 %}
